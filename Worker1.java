@@ -1,27 +1,26 @@
 import java.util.Random;
 
-class Produttore extends Thread {
+class Worker1 extends Thread {
   Semaforo pieno;
   Semaforo vuoto;
   Random att = new Random();
 
-  public Produttore(Semaforo s1, Semaforo s2) {
+  public Worker1(Semaforo s1, Semaforo s2) {
     pieno = s1;
     vuoto = s2;
   }
 
   public void run() {
+    int dato;
     int attesa;
-    int k = 0;
 
     while (true) {
       attesa = att.nextInt(100) * 25;
 
-      vuoto.P();
-        Main.risorsa_comune = k;
-        System.out.println("Produttore: dato scritto: " + k);
-        k++;
-      pieno.V();
+      pieno.P();
+        dato = Main.risorsa_comune;
+        System.out.println("Consumatore: dato letto: " + dato);
+      vuoto.V();
 
       try {
         Thread.sleep(attesa);
